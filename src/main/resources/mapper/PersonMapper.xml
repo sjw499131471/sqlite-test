@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjw.dao.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.sjw.model.Person">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="AGE" jdbcType="INTEGER" property="age" />
+  </resultMap>
+  <insert id="insert" parameterType="com.sjw.model.Person">
+    insert into person (ID, NAME, AGE)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})
+  </insert>
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT * from person
+    <if test="where != null">
+    ${where}
+    </if>
+    limit #{rowCount,jdbcType=INTEGER} offset #{startRowNum,jdbcType=INTEGER}
+  </select>
+  <select id="selectCount" resultType="int">
+    select count(1) from person
+    <if test="where != null">
+    ${where}
+    </if>
+  </select>
+</mapper>
